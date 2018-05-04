@@ -1,0 +1,10 @@
+id: "exzendtential-crisis" # this needs to be a single word, no spaces
+title: "exzendtential-crisis" # this is the title that will show up on the scoreboard
+description: "What is this?"
+public_files: [
+]
+tags: ["web?", "pwn?"]
+author: "adamd"
+stateful: false # two consecutive connections go to the same VM
+to_deploy: true # this chall needs a VM to be deployed
+is_ready: false # this chall is ready for prime time
