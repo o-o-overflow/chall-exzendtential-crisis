@@ -1,0 +1,15 @@
+* Thoughts
+
+- Bug is buffer overflow into a SQL query overwrite.
+- Has zend extension, which will be a pain in the ass to RE
+- Extension is compiled with all available options
+- 
+
+* Built-in passwords
+
+- sarte/Seriously,neverinalonglongtimewillyouhackthispasswordsodonottrysartesarte
+- kierkegaard/7xKJkLwhswf2VpZWnESg
+- nietzsche/vnzH5rkWYT7fKVV8Hb4X
+- dostoyevsky/U33kbF5jMrGpkfhxDEBR
+- camus/ZgncJVn8SNG2xygmzkxD
+- adamd/ZHkDwfQmFTrrDdXpE5fr
