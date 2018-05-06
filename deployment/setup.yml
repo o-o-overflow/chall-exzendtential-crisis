@@ -1,0 +1,138 @@
+---
+- hosts: all
+
+  # These next two are some tricks b/c some EC2 machines don't have python, the monsters
+  gather_facts: False
+  
+  pre_tasks:
+    - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      tags:
+        - always
+    - setup:
+  
+
+  tasks:
+
+    - name: Run the equivalent of "apt-get update" as a separate step
+      apt:
+        update_cache: yes
+      tags:
+        packages
+
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+      tags:
+        packages
+
+    - name: install required packages
+      package: name={{ item }} state=latest update_cache=yes
+      with_items:
+        - byobu
+        - php7.0
+        - php7.0-dev
+        - sqlite3
+        - libsqlite3-dev
+        - apache2
+        - libapache2-mod-php7.0
+      tags:
+        packages
+
+    - name: remove default html file
+      file:
+        path: "/var/www/html/index.html"
+        state: absent
+
+    - name: copy www files
+      copy:
+        src: "./www/{{ item }}"
+        dest: /var/www/html
+        mode: 0444
+        owner: root
+        group: root
+      with_items:
+        - essays.php
+        - flag.php
+        - index.php
+        - login.php
+        - logout.php
+        - register.php
+
+    - name: create upload directory
+      file:
+        path: "/var/www/html/upload"
+        owner: www-data
+        group: www-data
+        mode: 0775
+        state: directory
+
+    - name: create mydb directory
+      file:
+        path: "/var/lib/mydb"
+        owner: www-data
+        group: www-data
+        mode: 0770
+        state: directory
+
+    - name: copy the pristine database
+      copy:
+        src: "./mydb.db"
+        dest: "/var/lib/mydb/mydb.db"
+        owner: www-data
+        group: www-data
+        mode: 0660
+
+    - name: copy mydb.so to correct location
+      copy:
+        src: "./mydb.so"
+        dest: "/usr/lib/php/20151012/mydb.so"
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - restart apache2
+
+    - name: install our php config
+      copy:
+        src: "./php.ini"
+        dest: "/etc/php/7.0/apache2/php.ini"
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - restart apache2
+
+    - name: install libphpcpp
+      copy:
+        src: "./libphpcpp.so.2.0.0"
+        dest: "/usr/lib/libphpcpp.so.2.0.0"
+        owner: root
+        group: root
+        mode: 0755
+      notify:
+        - restart apache2
+
+    - name: link for other versions of libphpcpp
+      file:
+        src: "/usr/lib/libphpcpp.so.2.0.0"
+        dest: "{{ item }}"
+        state: link
+      with_items:
+        - /usr/lib/libphpcpp.so.2.0
+        - /usr/lib/libphpcpp.so
+      notify:
+        - restart apache2
+
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
+        
+        
+
+        
+        
+        
+
+        

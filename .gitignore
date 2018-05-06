@@ -3,3 +3,6 @@
 .vagrant
 setup.retry
 ubuntu-xenial-16.04-cloudimg-console.log
+src/www/upload
+src/c/*.o
+src/c/*.so
