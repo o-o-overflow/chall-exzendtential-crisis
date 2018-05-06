@@ -67,6 +67,12 @@
         mode: 0775
         state: directory
 
+    - name: cronjob to clean up uploaded files every 10 minutes
+      cron:
+        name: "clean up upload"
+        job: "/bin/rm -rf /var/www/html/upload/*"
+        minute: "*/10"
+
     - name: create mydb directory
       file:
         path: "/var/lib/mydb"
@@ -123,6 +129,7 @@
         - /usr/lib/libphpcpp.so
       notify:
         - restart apache2
+
 
 
   handlers:
