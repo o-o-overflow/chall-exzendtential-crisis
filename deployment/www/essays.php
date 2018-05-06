@@ -16,6 +16,11 @@ if (!isset($_SESSION['userid']))
 
 if (isset($_POST['essay']))
 {
+   if (strlen($_POST['essay']) > 10000)
+   {
+	  header("Location: /essays.php");
+	  exit();
+   }
    $dirname = "upload/${_SESSION['userid']}/";
    mkdir($dirname, 0770, true);
 
@@ -35,7 +40,7 @@ if (isset($_GET['preview']))
 	  header("Location: /essays.php");
 	  exit();
    }
-   $content = file_get_contents($dirname . $fname);
+   $content = file_get_contents($dirname . $fname, False, NULL, 0, 524288);
    echo "<h1>Your essay submission</h1>";
    echo "<pre>";
    echo $content;
