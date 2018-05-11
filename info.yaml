@@ -1,6 +1,11 @@
 id: "exzendtential-crisis" # this needs to be a single word, no spaces
 title: "exzendtential-crisis" # this is the title that will show up on the scoreboard
-description: "What is this?"
+description: |
+  What is this?
+
+  Flag format is nonstandard: `ooo{ }`
+
+  http://d4a386ad.quals2018.oooverflow.io
 public_files: [
 ]
 tags: ["web", "pwn"]
