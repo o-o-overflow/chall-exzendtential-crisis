@@ -52,7 +52,7 @@ if (isset($_GET['preview']))
 
 function check_fname($fname)
 {
-   $bad = ["flag", "proc", "\x90"];
+   $bad = ["flag", "proc", "dev", "sys", "\x90"];
    foreach ($bad as $b)
    {
 	  if (strpos($fname, $b) !== false)
