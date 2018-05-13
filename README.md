@@ -6,7 +6,7 @@ Intended solution:
 
 The first vuln relies on users being able to leak any file, particularly the `mydb.so` extension that queries the DB. First, get the `php.ini` to see that there's an extension (plus the name of the challenge). Then, leak the `mydb.so`.
 
-There is a buffer overflow vulnerability in the mydb.so that allows you to overflow into a SQL injection. 
+There is a buffer overflow vulnerability in the mydb.so where you couldn't overwrite rip, however it allows you to overflow into a SQL injection. 
 
 Check [exploit.py](exploit.py) for info.
 
